@@ -28,7 +28,7 @@ sub read_conf {
 sub read_users {
     my ($file_name) = @_;
     if (!open USERS_FILE, '<', $file_name) {
-        exit;
+        return;
     }
     my @users;
     while (my $user = <USERS_FILE>) {
@@ -47,17 +47,18 @@ sub add_user {
     for my $cur_user (@users){
         if($cur_user eq $new_user){
             $is_exist = 1;
-            last;
+            return;;
         }
     }
     if($is_exist){
         return;
     }
     if (!open USERS_FILE, '>>', $file_name) {
-        exit;
+        return;
     }
     print USERS_FILE  "$new_user\n" ;
     close USER_FILE;
+    return;
 }
 
 sub remove_user{
@@ -76,11 +77,12 @@ sub remove_user{
         return;
     }
     if (!open USERS_FILE, '>',  $file_name) {
-        exit;
+        return;
     }
     for my $cur_user (@new_user){
         print USERS_FILE  "$cur_user\n" ;
     }
     close USER_FILE;
+    return;
 }
 1;
