@@ -24,3 +24,4 @@ sub read_conf{
     close CON_FILE;
     return %user_pass;
 }
+1;
