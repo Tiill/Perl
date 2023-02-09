@@ -28,6 +28,7 @@ sub read_conf {
 sub read_users {
     my ($file_name) = @_;
     if (!open USERS_FILE, '<', $file_name) {
+        print "Can`t open file [$file_name].\n";
         return;
     }
     my @users;
@@ -47,18 +48,17 @@ sub add_user {
     for my $cur_user (@users){
         if($cur_user eq $new_user){
             $is_exist = 1;
-            return;;
+            print "User [$new_user] is exist.\n";
+            return 0;
         }
     }
-    if($is_exist){
-        return;
-    }
     if (!open USERS_FILE, '>>', $file_name) {
-        return;
+        print "Can`t open file [$file_name].\n";
+        return 0;
     }
     print USERS_FILE  "$new_user\n" ;
     close USER_FILE;
-    return;
+    return 1;
 }
 
 sub remove_user{
@@ -66,23 +66,25 @@ sub remove_user{
     my @users = read_users($file_name, $rem_user);
     my @new_user;
     my $is_exist = 0;
-    for(my $i =0; $i < @users; $i++){
-        if(!($users[$i] eq $rem_user)){
-            push @new_user, $users[$i];
+    for my $cur_user (@users){
+        if(!($cur_user eq $rem_user)){
+            push @new_user, $cur_user;
         } else{
             $is_exist = 1;
         }
     }
     if(!$is_exist){
-        return;
+        print "User [$rem_user] not exist for remove,\n";
+        return 0;
     }
     if (!open USERS_FILE, '>',  $file_name) {
-        return;
+        print "Can`t open file [$file_name].\n";
+        return 0;
     }
     for my $cur_user (@new_user){
         print USERS_FILE  "$cur_user\n" ;
     }
     close USER_FILE;
-    return;
+    return 1;
 }
 1;
