@@ -1,12 +1,8 @@
-#!/usr/bin/perl
+package tools;
 use strict;
 use warnings FATAL => 'all';
 
-my %result_hash = _read_conf ('ConfigTest');
-print %result_hash;
-
-
-sub _read_conf{
+sub read_conf{
     my ($file_name) = @_;
     if (!open CON_FILE, '<', $file_name) {
         die "File \"$file_name\" not open. Error $!";
