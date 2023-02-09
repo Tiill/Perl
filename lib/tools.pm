@@ -72,7 +72,6 @@ sub remove_user{
             $is_exist = 1;
         }
     }
-    print @users;
     if(!$is_exist){
         return;
     }
