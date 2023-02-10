@@ -59,17 +59,17 @@ sub add_user {
 
 sub remove_user{
     my($file_name, $rem_user) = @_;
-    my @users = get_users($file_name, $rem_user);
-    my @new_user;
-    my $is_exist = 0;
-    for my $cur_user (@users){
-        if(!($cur_user eq $rem_user)){
-            push @new_user, $cur_user;
+    my %users = get_users($file_name, $rem_user);
+    my %new_user;
+    my $is_find = 0;
+    while (my ($user_name_file, $user_passwd_file) = each %users){
+        if(!($user_name_file eq $rem_user)){
+            $new_user{$user_name_file} = $user_passwd_file;
         } else{
-            $is_exist = 1;
+            $is_find = 1;
         }
     }
-    if(!$is_exist){
+    if(!$is_find){
         print "User [$rem_user] not exist for remove,\n";
         return 0;
     }
@@ -77,8 +77,8 @@ sub remove_user{
         print "Can`t open file [$file_name].\n";
         return 0;
     }
-    for my $cur_user (@new_user){
-        print USERS_FILE  "$cur_user\n" ;
+    while(my($user_name, $passwd) = each %new_user){
+        print USERS_FILE  "$user_name=$passwd\n" ;
     }
     close USER_FILE;
     return 1;
