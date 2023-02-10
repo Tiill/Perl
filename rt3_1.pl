@@ -6,9 +6,9 @@ use tools;
 my $users_file_name = 'userspass';
 my $user_name = $ENV{'user_name'};
 my $action = $ENV{'action'};
+my $passwd = $ENV{'passwd'};
 
 if(!defined($action)){
-    print "action $action is null\n";
     print "action $action is null\n";
     exit;
 }
@@ -23,7 +23,11 @@ if($action eq 'get'){
         print "Username is null\n";
         exit;
     }
-    my $result_adding = tools::add_user($users_file_name, $user_name);
+    if(!defined($passwd)){
+        print "Password is null\n";
+        exit;
+    }
+    my $result_adding = tools::add_user($users_file_name, $user_name, $passwd);
     if($result_adding){
         print "Add user[$user_name].\n";
     }else{
