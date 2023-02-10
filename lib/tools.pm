@@ -2,7 +2,7 @@ package tools;
 use strict;
 use warnings FATAL => 'all';
 
-sub read_users {
+sub get_users {
     my ($file_name) = @_;
     if (!open USERS_FILE, '<', $file_name) {
         print "Can`t open file [$file_name].\n";
@@ -21,7 +21,7 @@ sub read_users {
     return @users;
 }
 
-sub read_one_user {
+sub get_one_user {
     my ($file_name, $user_name) = @_;
     if (!open USERS_FILE, '<', $file_name) {
         print "Can`t open file [$file_name].\n";
@@ -44,7 +44,7 @@ sub read_one_user {
 
 sub add_user {
     my($file_name, $new_user, $passwd) = @_;
-    my %user_pass = read_one_user($file_name, $new_user);
+    my %user_pass = get_one_user($file_name, $new_user);
     if(%user_pass > 0){
         print "User [$new_user] is exist.\n";
     }
@@ -59,7 +59,7 @@ sub add_user {
 
 sub remove_user{
     my($file_name, $rem_user) = @_;
-    my @users = read_users($file_name, $rem_user);
+    my @users = get_users($file_name, $rem_user);
     my @new_user;
     my $is_exist = 0;
     for my $cur_user (@users){
