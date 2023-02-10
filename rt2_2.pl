@@ -9,7 +9,8 @@ my $action = $ENV{'action'};
 
 if(!defined($action)){
     print "action $action is null\n";
-    die "action $action is null\n";
+    print "action $action is null\n";
+    exit;
 }
 if($action eq 'get'){
     my @users = tools::read_users($users_file_name);
@@ -19,7 +20,8 @@ if($action eq 'get'){
     }
 }elsif($action eq 'add'){
     if(!defined($user_name)){
-        die "Username is null\n";
+        print "Username is null\n";
+        exit;
     }
     my $result_adding = tools::add_user($users_file_name, $user_name);
     if($result_adding){
@@ -29,7 +31,8 @@ if($action eq 'get'){
     }
 }elsif($action eq 'del'){
     if(!defined($user_name)){
-        die "Username is null\n";
+        print "Username is null\n";
+        exit;
     }
     my $result_deleting = tools::remove_user($users_file_name, $user_name);
     if($result_deleting){
