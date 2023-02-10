@@ -13,9 +13,9 @@ if(!defined($action)){
     exit;
 }
 if($action eq 'get'){
-    my @users = tools::get_users($users_file_name);
+    my %users = tools::get_users($users_file_name);
     print "Users:\n";
-    for my $cur_user (@users){
+    for my $cur_user (keys %users){
         print "User[$cur_user]\n";
     }
 }elsif($action eq 'add'){

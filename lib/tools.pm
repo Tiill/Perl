@@ -8,17 +8,17 @@ sub get_users {
         print "Can`t open file [$file_name].\n";
         return;
     }
-    my @users;
+    my %user_pass;
     while (my $line = <USERS_FILE>) {
         chomp($line);
         if (!($line =~ /.+=.+/)) {
             next;
         }
-        $line =~ m/^(\w+)=/;
-        push @users, $1;
+        my ($user_name_file, $passwd_file) = split '=', $line;
+            $user_pass{$user_name_file} = $passwd_file;
     }
     close USERS_FILE;
-    return @users;
+    return %user_pass;
 }
 
 sub get_one_user {
