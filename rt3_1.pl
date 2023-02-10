@@ -44,6 +44,21 @@ if($action eq 'get'){
     }else{
         print "User [$user_name] not deleted.\n";
     }
+}elsif($action eq 'login'){
+    if(!defined($user_name)){
+        print "Username is null\n";
+        exit;
+    }
+    if(!defined($passwd)){
+        print "Password is null\n";
+        exit;
+    }
+    my $result_logging = tools::login_user($users_file_name, $user_name, $passwd);
+    if($result_logging){
+        print "User[$user_name] access granted.\n";
+    }else{
+        print "User [$user_name] access denied.\n";
+    }
 }else{
     print "Action [$action] is unknown.\n";
 }

@@ -83,4 +83,18 @@ sub remove_user{
     close USER_FILE;
     return 1;
 }
+sub login_user{
+    my($file_name,$user_name, $passwd) = @_;
+    my %find_user = get_one_user($file_name, $user_name);
+    if(%find_user == 0){
+        print "User [$user_name] not find.\n";
+        return 0;
+    }
+    if($passwd eq $find_user{$user_name}){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 1;
