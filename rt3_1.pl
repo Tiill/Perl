@@ -9,7 +9,7 @@ my $action = $ENV{'action'};
 my $passwd = $ENV{'passwd'};
 
 if(!defined($action)){
-    print "action $action is null\n";
+    print "action is null\n";
     exit;
 }
 if($action eq 'get'){

@@ -1,6 +1,7 @@
 package tools;
 use strict;
 use warnings FATAL => 'all';
+use Digest::SHA;
 
 sub get_users {
     my ($file_name) = @_;
@@ -52,11 +53,12 @@ sub add_user {
     if (!passwd_check($passwd)) {
         return 0;
     }
+    my $pass_hash = get_sha1_hash($passwd);
     if (!open USERS_FILE, '>>', $file_name) {
         print "Can`t open file [$file_name].\n";
         return 0;
     }
-    print USERS_FILE "$new_user=$passwd\n";
+    print USERS_FILE "$new_user=$pass_hash\n";
     close USER_FILE;
     return 1;
 }
@@ -95,7 +97,8 @@ sub login_user {
         print "User [$user_name] not find.\n";
         return 0;
     }
-    if ($passwd eq $find_user{$user_name}) {
+    my $pass_hash = get_sha1_hash($passwd);
+    if ($pass_hash eq $find_user{$user_name}) {
         return 1;
     }
     else {
@@ -131,6 +134,15 @@ sub passwd_check {
         $is_valid = 0;
     }
     return $is_valid;
+}
+
+sub get_sha1_hash{
+    my($user_passwd) = @_;
+    my($sha512) = Digest::SHA->new(512);
+    $sha512->add($user_passwd);
+    my($hash_pass) = $sha512->hexdigest;
+
+    return $hash_pass;
 }
 
 1;
