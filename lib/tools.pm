@@ -106,36 +106,31 @@ sub login_user {
 sub passwd_check {
     my ($passwd) = @_;
     my $is_valid = 1;
-    $_ = $passwd;
-    if(/\s+/){
+    if($passwd =~ /\s+/){
         print "The password must be without spaces.\n";
         $is_valid = 0;
     }
-    if (!/[\w!-\/]{8,}/) {
+    if (!($passwd =~ /[\w!-\/]{8,}/)) {
         print "The password must contain at least 8 symbols.\n";
         $is_valid = 0;
     }
-    if (!/[A-Z]+/) {
+    if (!($passwd =~ /[A-Z]+/)) {
         print "The password must contain at least one uppercase letter.\n";
         $is_valid = 0;
     }
-    if(!/^\w/){
+    if(!($passwd =~ /^\w/)){
         print "The password must start with a number or letter.\n";
         $is_valid = 0;
     }
-    if(!/\w$/){
+    if(!($passwd =~ /\w$/)){
         print "The password must end with a number or letter.\n";
         $is_valid = 0;
     }
-    if(!/[!-\/]+/){
+    if(!($passwd =~ /[!-\/]+/)){
         print "The password must contain one special character.\n";
         $is_valid = 0;
     }
-    if($is_valid){
-        return 1;
-    }else{
-        return 0;
-    }
+    return $is_valid;
 }
 
 1;
