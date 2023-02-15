@@ -8,9 +8,9 @@ for my $cur(@array){
 }
 print "\n";
 @array = sort_array(@array);
-for my $cur (@array){
-    print $cur . ',';
-}
+
+print join (',', @array);
+
 print "\n";
 
 sub sort_array {
