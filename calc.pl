@@ -28,7 +28,7 @@ while (1) {
         print "Operation: ";
     }
     elsif (!defined($operation)) {
-        if (!($line =~ /^[+\-*\/]{1,1}$/)) {
+        if (!($line =~ /^[+\-*\/]{1,2}$/)) {
             print "oper bad\n";
             next;
         }
@@ -77,5 +77,6 @@ sub _calculate {
     }
     else {
         print "Unknown operation $operation.\n";
+        return $arg_1;
     }
 }
