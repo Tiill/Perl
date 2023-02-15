@@ -33,10 +33,10 @@ while (1) {
             next;
         }
         $operation = $line;
-        $history = $history . $operation;
         if ($operation eq '/' or $operation eq '*') {
             $history = '(' . $history . ')';
         }
+        $history = $history . $operation;
         print "Second argument: ";
     }
     elsif (!defined($arg_2)) {
