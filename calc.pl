@@ -6,6 +6,7 @@ my $result;
 my $operation;
 my $arg_2;
 my $history = '';
+my $add_history;
 print "First argument: ";
 while (1) {
     my $line = <STDIN>;
@@ -15,6 +16,9 @@ while (1) {
         print "\033[1; 0H";
         print $history . "=$result" . "\n";
         $result = undef;
+        $operation = undef;
+        $arg_2 = undef;
+        $history = '';
         print "First argument: ";
         next;
     }
@@ -36,7 +40,7 @@ while (1) {
         if ($operation eq '/' or $operation eq '*') {
             $history = '(' . $history . ')';
         }
-        $history = $history . $operation;
+        $add_history = $operation;
         print "Second argument: ";
     }
     elsif (!defined($arg_2)) {
@@ -52,7 +56,7 @@ while (1) {
             next;
         }
         $arg_2 = $line;
-        $history = $history . $arg_2;
+        $history = $history . $add_history . $arg_2;
         $result = _calculate($result, $operation, $arg_2);
         $operation = undef;
         $arg_2 = undef;
