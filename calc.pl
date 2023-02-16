@@ -7,19 +7,22 @@ my $operation;
 my $arg_2;
 my $history = '';
 my $add_history;
-print "First argument: ";
+print 'First argument: ';
 while (1) {
     my $line = <STDIN>;
     chomp($line);
     if ($line =~ /=/) {
+        if (!defined($result)) {
+            print 'First argument: ';
+            next;
+        }
         print "\033[2J";
         print "\033[1; 0H";
         print $history . "=$result" . "\n";
-        $result = undef;
         $operation = undef;
         $arg_2 = undef;
-        $history = '';
-        print "First argument: ";
+        $history = "$result";
+        print "First argument: $result\nOperation: ";
         next;
     }
     if (!defined($result)) {
@@ -29,7 +32,7 @@ while (1) {
         }
         $result = $line;
         $history = $history . $result;
-        print "Operation: ";
+        print 'Operation: ';
     }
     elsif (!defined($operation)) {
         if (!($line =~ /^[+\-*\/]{1,2}$/)) {
@@ -41,7 +44,7 @@ while (1) {
             $history = '(' . $history . ')';
         }
         $add_history = $operation;
-        print "Second argument: ";
+        print 'Second argument: ';
     }
     elsif (!defined($arg_2)) {
         if (!($line =~ /^\d+$/)) {
@@ -51,7 +54,7 @@ while (1) {
         if (($operation =~ /\//) and ($line == 0)) {
             print "Divide by zero!\n";
             print "First argument: $result\n";
-            print "Second argument: ";
+            print 'Second argument: ';
             $operation = undef;
             next;
         }
@@ -61,7 +64,7 @@ while (1) {
         $operation = undef;
         $arg_2 = undef;
         print "Result: $result\n";
-        print "Operation: ";
+        print 'Operation: ';
     }
 }
 
