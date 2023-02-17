@@ -6,7 +6,10 @@ my $target_file_name = 'newsletter';
 my $target_file_path = './newsletters/';
 my $ban_file_name = 'ban_list';
 my $ban_file_path = './etc/';
-my @ban_array = _get_lines_file($ban_file_name, $ban_file_path);
+my @ba = _get_lines_file($ban_file_name, $ban_file_path);
+my %ban_array;
+$ban_array{$_}++ for (@ba);
+print "all".%ban_array."\n";
 my $minimal_count = 2;
 my $input_text = '';
 my %all_words;
@@ -20,7 +23,7 @@ foreach my $cur_word (@words_array) {
         next;
     }
     $words_count++;
-    if (!_check_word($cur_word)) {
+    if (!_check_word($cur_word, %ban_array)) {
         print "Invalid word:$cur_word\n";
         next;
     }
@@ -40,11 +43,9 @@ for my $cur_word (sort {$all_words{$b} <=> $all_words{$a}} keys %all_words) {
 print "All words count: $words_count.\n";
 
 sub _check_word {
-    my $word = $_[0];
-    for my $invalid_word (@ban_array) {
-        if (lc($word) eq lc($invalid_word)) {
-            return 0;
-        }
+    my ($word, %ban_list) = @_;
+    if(exists($ban_list{$word})){
+        return 0;
     }
     return 1;
 }
