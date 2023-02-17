@@ -9,7 +9,6 @@ my $ban_file_path = './etc/';
 my @ba = _get_lines_file($ban_file_name, $ban_file_path);
 my %ban_array;
 $ban_array{$_}++ for (@ba);
-print "all".%ban_array."\n";
 my $minimal_count = 2;
 my $input_text = '';
 my %all_words;
@@ -44,7 +43,7 @@ print "All words count: $words_count.\n";
 
 sub _check_word {
     my ($word, %ban_list) = @_;
-    if(exists($ban_list{$word})){
+    if (exists($ban_list{$word})) {
         return 0;
     }
     return 1;
